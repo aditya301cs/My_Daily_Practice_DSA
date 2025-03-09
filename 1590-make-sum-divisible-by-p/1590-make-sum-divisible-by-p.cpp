@@ -1,38 +1,29 @@
 class Solution {
 public:
     int minSubarray(vector<int>& nums, int p) {
-        int n = nums.size();
-        int SUM = 0;
+        unordered_map<int, int> map;
+        map[0] = -1; // To handle cases where prefix sum itself satisfies the condition
+        
+        int prefixSum = 0, total = 0, minLength = nums.size();
 
-        //(a+b)%p = (a%p + b%p) % p
-        for(int &num : nums) {
-            SUM = (SUM + num) % p;
+        for (int num : nums) {
+            total = (total + num) % p;
         }
 
-        int target = SUM%p;
+        int need = total % p;
+        if (need == 0) return 0;
 
-        if(target == 0) {
-            return 0;
-        }
-
-        unordered_map<int, int> mp; //prev sum%p ko store karega
-
-        int curr = 0;
-        mp[0] = -1;
-
-        int result = n;
-        for(int j = 0; j < n; j++) {
-            curr = (curr + nums[j]) % p;
-
-            int remain = (curr - target + p) % p;
-            if(mp.find(remain) != mp.end()) {
-                result = min(result, j - mp[remain]);
+        for (int i = 0; i < nums.size(); i++) {
+            prefixSum = (prefixSum + nums[i]) % p;
+            int want = (prefixSum - need + p) % p;
+            
+            if (map.find(want) != map.end()) {
+                minLength = min(minLength, i - map[want]);
             }
-
-            mp[curr] = j;
+            
+            map[prefixSum] = i; // Store the latest index for this remainder
         }
 
-        return result == n ? -1 : result;
-
+        return minLength == nums.size() ? -1 : minLength;
     }
 };
