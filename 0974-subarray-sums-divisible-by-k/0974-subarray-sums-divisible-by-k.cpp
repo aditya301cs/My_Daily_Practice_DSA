@@ -1,20 +1,31 @@
 class Solution {
 public:
     int subarraysDivByK(vector<int>& nums, int k) {
-        vector<int> remList(k, 0);
-        int sum = 0, ans = 0;
-        remList[0] = 1;
+        unordered_map<int, int> remFreq;
+        remFreq[0] = 1; // To handle cases where subarray itself is divisible by k
+        int sum = 0, count = 0;
 
-        for (int i = 0; i < nums.size(); i++) {
-            sum += nums[i];
+        for (int num : nums) {
+            sum += num;
             int rem = sum % k;
+
+            // If remainder is negative, adjust it to be positive
             if (rem < 0) {
                 rem += k;
             }
-            ans += remList[rem];
-            remList[rem]++;
+
+            // If this remainder was seen before, add its count to result
+            if (remFreq.find(rem) != remFreq.end()) {
+                count += remFreq[rem];
+            }
+            // OR in one Line
+            // count += remFreq[rem];
+
+            // Increment frequency of this remainder
+            remFreq[rem]++;
         }
 
-        return ans;
+        return count;
+
     }
 };
