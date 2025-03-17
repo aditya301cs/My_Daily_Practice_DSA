@@ -17,11 +17,11 @@ public:
         for(int i = 1; i <= n; i++) {
             fast = fast->next;
         }
-        if(fast == NULL) {
+        if(fast == NULL) {  // len of LL == n
             return head->next;
         }
         
-        while(fast && fast->next) {
+        while(fast != NULL && fast->next != NULL) {
             slow = slow->next;
             fast = fast->next;
         }
