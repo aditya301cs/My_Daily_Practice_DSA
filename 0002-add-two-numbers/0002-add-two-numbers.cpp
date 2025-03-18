@@ -15,23 +15,25 @@ public:
         ListNode* curr = resNode;
         int carry = 0;
         int sum = 0;
-        while(l1 != NULL || l2 != NULL || carry != 0){
+        while (l1 != NULL || l2 != NULL) {
             sum = carry;
-            if(l1 != NULL){
+            if (l1 != NULL) {
                 sum += l1->val;
-                l1 = l1->next; 
+                l1 = l1->next;
             }
-             if(l2 != NULL){
+            if (l2 != NULL) {
                 sum += l2->val;
-                l2 = l2->next; 
+                l2 = l2->next;
             }
 
             int num = sum % 10;
-            curr -> next = new ListNode(num);
+            curr->next = new ListNode(num);
             carry = sum / 10;
-            curr = curr -> next;
-
+            curr = curr->next;
         }
-        return resNode -> next;
+        if (carry != 0) {
+            curr->next = new ListNode(carry);
+        }
+        return resNode->next;
     }
 };
