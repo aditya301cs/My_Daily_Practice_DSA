@@ -9,10 +9,15 @@ public:
 
         for (int i = 0; i < n; i++) {
             right_sum -= nums[i];  // Subtract current element from right sum
-            result[i] = (nums[i] * i - left_sum) + (right_sum - nums[i] * (n - 1 - i));
+            int left_Contribution = (nums[i] * i - left_sum);
+            int right_Contribution = (right_sum - nums[i] * (n - 1 - i));
+            result[i] = left_Contribution + right_Contribution;
             left_sum += nums[i];   // Add current element to left sum
         }
 
         return result;
     }
 };
+
+
+
