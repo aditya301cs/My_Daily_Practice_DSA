@@ -11,14 +11,12 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* prev = NULL;
-        ListNode* curr = head;
-
-        while(curr != NULL) {
-            ListNode* next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+        ListNode* prev = nullptr;
+        while (head) {
+            ListNode* nextNode = head->next;
+            head->next = prev;
+            prev = head;
+            head = nextNode;
         }
         return prev;
     }
@@ -28,8 +26,8 @@ public:
         ListNode* temp = head;
         ListNode* prev = nullptr;
         int carry = 0;
-        while(temp != NULL) {
-            
+        while (temp != NULL) {
+
             int value = (temp->val * 2) + carry;
             temp->val = value % 10;
             carry = value / 10;
@@ -37,7 +35,7 @@ public:
             temp = temp->next;
         }
 
-        if(carry != 0) {
+        if (carry != 0) {
             prev->next = new ListNode(carry);
         }
 
