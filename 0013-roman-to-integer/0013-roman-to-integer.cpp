@@ -1,36 +1,20 @@
 class Solution {
 public:
-    int num(char c){
-        if(c == 'I')
-            return 1;
-        else if(c == 'V')
-            return 5;
-        else if(c == 'X')
-            return 10;
-        else if(c == 'L')
-            return 50;
-        else if(c == 'C')
-            return 100;
-        else if(c == 'D')
-            return 500;
-        else 
-            return 1000;
-    }
     int romanToInt(string s) {
-        int sum = 0;
-        int index = 0;
-        int n = s.size();
+        unordered_map<char, int> map = {{'I', 1},   {'V', 5},   {'X', 10},
+                                        {'L', 50},  {'C', 100}, {'D', 500},
+                                        {'M', 1000}};
 
-        while (index < n - 1) { // Process till the second-last character
-            if (num(s[index]) < num(s[index + 1])) {
-                sum -= num(s[index]);
+        int result = map[s.back()]; // Start from the last character
+
+        for (int i = s.length() - 2; i >= 0; i--) {
+            if (map[s[i]] < map[s[i + 1]]) {
+                result -= map[s[i]];
             } else {
-                sum += num(s[index]);
+                result += map[s[i]];
             }
-            index++;
         }
 
-        sum += num(s[n - 1]); // Add the last character after the loop
-        return sum;
+        return result;
     }
 };
