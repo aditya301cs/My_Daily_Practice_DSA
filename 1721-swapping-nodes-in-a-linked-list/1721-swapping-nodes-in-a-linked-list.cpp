@@ -16,17 +16,18 @@ public:
         if (head == NULL || head->next == NULL) {
             return head;
         }
-        
+        // Step 1: Convert linked list to an array
         vector<int> arr;
         ListNode* temp = head;
         while (temp != NULL) {
             arr.push_back(temp->val);
             temp = temp->next;
         }
-
+        // Step 2: Swap k-th element from start and end
         int n = arr.size();
         swap(arr[k - 1], arr[n - k]);
 
+        // Step 3: Reconstruct the linked list with modified values
         if (arr.empty())
             return NULL;
 
