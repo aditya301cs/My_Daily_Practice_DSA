@@ -11,12 +11,15 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        if(head == NULL || head -> next == NULL){
+        // Base case: empty list or last node
+        if (head == NULL || head->next == NULL)
             return head;
-        }
-        ListNode* last = reverseList(head -> next); //last = future head
-        head->next ->next = head;
-        head->next = NULL;
-        return last;
+
+        // Recursive case
+        ListNode* rest = reverseList(head->next);  // reverse rest of list
+        head->next->next = head;  // make next node point to current
+        head->next = NULL;        // set current node's next to NULL
+
+        return rest;
     }
 };
