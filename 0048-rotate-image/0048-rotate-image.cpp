@@ -5,15 +5,15 @@ public:
         int n = m;
 
         // Transpose of matrix
-        for(int i = 0; i < n; i++){
-            for(int j = i; j < n; j++){
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
                 swap(matrix[i][j], matrix[j][i]);
             }
         }
 
         // Reverse rows of matrix
-        for(int i = 0; i < m; i++){
-            reverse(matrix[i].begin(), matrix[i].end());
+        for (auto& row : matrix) {
+            reverse(row.begin(), row.end());
         }
     }
 };
