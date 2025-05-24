@@ -15,16 +15,25 @@ public:
         if (root == nullptr)
             return nullptr;
 
-        // Swap the left and right child
-        TreeNode* temp = root->left;
-        root->left = root->right;
-        root->right = temp;
+        std::queue<TreeNode*> q;
+        q.push(root);
 
-        // Recursively invert the left and right subtrees
-        invertTree(root->left);
-        invertTree(root->right);
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop();
+
+            // Swap left and right child
+            TreeNode* temp = node->left;
+            node->left = node->right;
+            node->right = temp;
+
+            // Add children to the queue if not null
+            if (node->left != nullptr)
+                q.push(node->left);
+            if (node->right != nullptr)
+                q.push(node->right);
+        }
 
         return root;
     }
 };
-
