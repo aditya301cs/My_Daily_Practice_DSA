@@ -1,0 +1,11 @@
+class Solution {
+  public:
+    int findFrequency(vector<int> arr, int x) {
+        // Your code here
+        map<int, int>mpp;
+        for(auto x : arr){
+            mpp[x]++;
+        }
+        return mpp[x];
+    }
+};
