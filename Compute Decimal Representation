@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> decimalRepresentation(int n) {
+        int cnt = 0;
+        int nums = n;
+        while (nums > 0) {
+            int digit = nums % 10;
+            if (digit > 0) {
+                cnt++;
+            }
+            nums /= 10;
+        }
+        vector<int> ans(cnt);
+        int power = 0;
+        int idx = cnt - 1; // index for ans
+
+        // go through all digits of n
+        while (n > 0) {
+            int digit = n % 10;
+            if (digit > 0) {
+                ans[idx] = digit * pow(10, power);
+                idx--;
+            }
+            n /= 10;
+            power++;
+        }
+        return ans;
+    }
+};
