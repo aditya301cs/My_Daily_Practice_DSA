@@ -3,8 +3,14 @@ public:
     int m,n;
     int t[501][501];
     int solve(string s1, string s2, int i, int j){
-        if(i == m) return n - j;
-        else if(j == n) return m - i;
+        if(i == m){
+            return n - j;
+        } 
+        else if(j == n){
+            return m - i;
+        } 
+        if(t[i][j] != -1) return t[i][j];
+        
         if(s1[i] == s2[j]){
             return t[i][j] = solve(s1, s2, i+1, j+1);
         }else{
