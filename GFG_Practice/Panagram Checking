@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    bool checkPangram(string& s) {
+        // Convert string to lowercase
+        transform(s.begin(), s.end(), s.begin(), ::tolower);
+        
+        vector<int> alpha(26, 0);
+        int count = 0;
+        
+        for(auto &ch : s){
+            if(ch >= 'a' && ch <= 'z'){  // Check if ch is alphabet
+                int index = ch - 'a';
+                if(alpha[index] == 0){
+                    alpha[index]++;
+                    count++;
+                }
+            }
+        }
+        
+        return count == 26;
+    }
+};
