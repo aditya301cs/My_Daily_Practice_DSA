@@ -1,3 +1,17 @@
+// Steps to Solve:
+
+// Trim leading and trailing spaces.
+
+// Extract words manually by iterating over the string.
+
+// Store words in a vector.
+
+// Reverse the vector and concatenate words with a single space.
+
+// Time Complexity: O(N)
+
+// Space Complexity: O(N)
+
 class Solution {
 public:
     string reverseWords(string s) {
@@ -25,12 +39,14 @@ public:
     }
 };
 
-// Steps to Solve:
+// Explanation of stringstream ss(s);
+// 1️⃣ What is stringstream ss(s); Doing?
+// stringstream ss(s); creates a stringstream object (ss) and initializes it with the string s.
 
-// Trim leading and trailing spaces.
+// It allows us to treat s as a stream (like cin), enabling easy word extraction.
 
-// Extract words manually by iterating over the string.
+// 2️⃣ How Does stringstream ss(s); Work?
+// Think of stringstream as a temporary input buffer containing s.
+// It lets us extract words one by one as if we were reading from cin.
 
-// Store words in a vector.
 
-// Reverse the vector and concatenate words with a single space.
