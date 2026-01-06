@@ -1,4 +1,3 @@
-
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -9,33 +8,42 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+//Approach-1 (Making use of length of LinkedList)
 class Solution {
 public:
+    
+    int FindLength(ListNode* head) {
+        int l = 0;
+        
+        while(head) {
+            head = head->next;
+            l++;
+        }
+        return l;
+    }
+    
     ListNode* swapNodes(ListNode* head, int k) {
-
-        if (head == NULL || head->next == NULL) {
-            return head;
+        //Kth Node from Start
+        //Kth Node from End = Length-K+1 Node from Beginning
+        
+        int Length = FindLength(head);
+        
+        int k_1 = k;
+        ListNode* temp1 = head;
+        while(k_1 > 1) {
+            temp1 = temp1->next;
+            k_1--;
         }
-        // Step 1: Convert linked list to an array
-        vector<int> arr;
-        ListNode* temp = head;
-        while (temp != NULL) {
-            arr.push_back(temp->val);
-            temp = temp->next;
+        
+        int k_2 = Length-k+1;
+        ListNode* temp2 = head;
+        while(k_2 > 1) {
+            temp2 = temp2->next;
+            k_2--;
         }
-        // Step 2: Swap k-th element from start and end
-        int n = arr.size();
-        swap(arr[k - 1], arr[n - k]);
-
-        // Step 3: Reconstruct the linked list with modified values
-        if (arr.empty())
-            return NULL;
-
-        temp = head;
-        for (int i = 0; i < n; i++) {
-            temp->val = arr[i];
-            temp = temp->next;
-        }
+        
+        swap(temp1->val, temp2->val);
         return head;
+        
     }
 };
