@@ -1,27 +1,37 @@
 class Solution {
 public:
     vector<string> result;
-
-    void backtrack(string curr, int open, int close, int n) {
-        // Base case
+    bool isValid(string str) {
+        int count = 0;
+        for (char ch : str) {
+            if (ch == '(')
+                count++;
+            else
+                count--;
+            if (count < 0)
+                return false;
+        }
+        return count == 0;
+    }
+    void solve(string& curr, int n) {
         if (curr.length() == 2 * n) {
-            result.push_back(curr);
+            if (isValid(curr)) {
+                result.push_back(curr);
+            }
             return;
         }
 
-        // Choice 1: Add '(' if possible
-        if (open < n) {
-            backtrack(curr + "(", open + 1, close, n);
-        }
+        curr.push_back('('); 
+        solve(curr, n);
+        curr.pop_back();
 
-        // Choice 2: Add ')' if valid
-        if (close < open) {
-            backtrack(curr + ")", open, close + 1, n);
-        }
+        curr.push_back(')');
+        solve(curr, n);
+        curr.pop_back();
     }
-
     vector<string> generateParenthesis(int n) {
-        backtrack("", 0, 0, n);
+        string curr = "";
+        solve(curr, n);
         return result;
     }
 };
