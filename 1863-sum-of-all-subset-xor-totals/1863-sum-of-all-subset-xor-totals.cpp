@@ -1,21 +1,36 @@
-//Approach-2 (Using optimal backtracking)
-//T.C : O(2^n)
-//S.C : O(n)
+//Approach-1 (Using simple backtracking to generate subsets)
+//T.C : O(n * 2^n)
+//S.C : O(n * 2^n)
 class Solution {
 public:
 
-    int solve(int i, vector<int>& nums, int Xor) {
-        if(i == nums.size()) {
-            return Xor;
+    void solve(vector<int>& nums, int i, vector<int>& currSubset,
+                         vector<vector<int>>& subsets) {
+
+        if (i == nums.size()) {
+            subsets.push_back(currSubset);
+            return;
         }
 
-        int include = solve(i+1, nums, nums[i] ^ Xor);
-        int exclude = solve(i+1, nums, Xor);
-
-        return include + exclude;
+        currSubset.push_back(nums[i]);
+        solve(nums, i + 1, currSubset, subsets);
+        currSubset.pop_back();
+        solve(nums, i + 1, currSubset, subsets);
     }
 
     int subsetXORSum(vector<int>& nums) {
-        return solve(0, nums, 0);
+        vector<vector<int>> subsets;
+        vector<int> currSubset;
+        solve(nums, 0, currSubset, subsets);
+
+        int result = 0;
+        for (auto& currSubset : subsets) {
+            int Xor = 0;
+            for (int num : currSubset) {
+                Xor ^= num;
+            }
+            result += Xor;
+        }
+        return result;
     }
 };
