@@ -1,16 +1,21 @@
-//Approach-3 (Observing pattern)
-//T.C : O(n)
-//S.C : O(1)
+//Approach-2 (Using optimal backtracking)
+//T.C : O(2^n)
+//S.C : O(n)
 class Solution {
 public:
-    int subsetXORSum(vector<int>& nums) {
-        int n = nums.size();
-        int result = 0;
 
-        for(int &num : nums) {
-            result |= num;
+    int solve(int i, vector<int>& nums, int Xor) {
+        if(i == nums.size()) {
+            return Xor;
         }
 
-        return result << (n-1);
+        int include = solve(i+1, nums, nums[i] ^ Xor);
+        int exclude = solve(i+1, nums, Xor);
+
+        return include + exclude;
+    }
+
+    int subsetXORSum(vector<int>& nums) {
+        return solve(0, nums, 0);
     }
 };
