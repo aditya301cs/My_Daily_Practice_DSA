@@ -1,42 +1,33 @@
 class Solution {
 public:
-    int t[201][20001];
-    bool solve(vector<int>& nums, int i, int x) {
-        if(x == 0) {
-            return true;
-        }
+    bool solve(vector<int>& nums, int n, int target, vector<vector<int>>&memo){
+        if(target == 0) return true;
+        if(n == 0) return false;
 
-        if(i >= nums.size()) {
-            return false;
-        }
+        if(memo[n][target] != -1) return memo[n][target];
 
-        if(t[i][x] != -1) {
-            return t[i][x];
-        }
 
-        bool take = false;
-        if(nums[i] <= x) {
-            take = solve(nums, i+1, x - nums[i]);
-        }
+        if(nums[n-1] > target) 
+            return memo[n][target] = solve(nums, n-1, target, memo);
 
-        bool not_take = solve(nums, i+1, x);
-
-        return t[i][x] = take || not_take;
+        return memo[n][target] = solve(nums, n-1, target, memo) || 
+                                 solve(nums, n - 1, target - nums[n - 1], memo);
+    } 
+    bool validPartition(vector<int>& nums, int n, int target){
+        vector<vector<int>>memo(n+1, vector<int>(target+1, -1));
+        return solve(nums, n, target, memo);
     }
-
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
+        int totalSum = 0;
+        int target = 0;
         
-        int S = accumulate(begin(nums), end(nums), 0);
+        for(auto & x : nums) totalSum += x;
 
-        if(S%2 != 0) {
-            return false;
-        }  
-        memset(t, -1, sizeof(t));
-        //vector<vecyot<int>> t(n+1, vector<int>(x+1, -1))
-        int x = S/2;
+        target = totalSum / 2;
 
-        return solve(nums, 0, x);
+        if(totalSum % 2 != 0) return false;
 
+        return validPartition(nums, n, target);
     }
 };
