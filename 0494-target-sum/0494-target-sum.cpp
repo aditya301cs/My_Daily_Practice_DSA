@@ -1,22 +1,27 @@
+//Approach-2 (Normal Recursion & Memoization using vector)
+//T.C : O(n*totalSum)
+//S.C : O(n*totalSum)
 class Solution {
 public:
-    int solve(int i, int currentSum, vector<int>& nums, int target, unordered_map<string, int>&mp){
-        if(i == nums.size()){
-            if(currentSum == target) return true;
-            else return false;
+    int S;
+    int solve(vector<int>& nums, int &target, int i, int sum, vector<vector<int>>& t) {
+        if(i == nums.size()) {
+            return sum == target ? 1 : 0;
         }
-        string key = to_string(i) + "_" + to_string(currentSum);
 
-        if(mp.count(key)){ //(mp.find(key) != mp.end())
-            return mp[key];
+        if(t[i][sum+S] != INT_MIN) {
+            return t[i][sum+S];
         }
-        int plus = solve(i+1, currentSum + nums[i], nums, target, mp);
-        int minus = solve(i+1, currentSum - nums[i], nums, target, mp);
+        int plus  = solve(nums, target, i+1, sum+nums[i], t);
+        int minus = solve(nums, target, i+1, sum-nums[i], t);
 
-        return mp[key] = plus+minus;
+        return t[i][sum+S] = plus+minus;
     }
+
     int findTargetSumWays(vector<int>& nums, int target) {
-        unordered_map<string,  int>mp;
-        return solve(0, 0, nums, target, mp);
+        int n = nums.size();
+        S = accumulate(begin(nums), end(nums), 0);
+        vector<vector<int>> t(n, vector<int>(2*S+1, INT_MIN));
+        return solve(nums, target, 0, 0, t);
     }
 };
