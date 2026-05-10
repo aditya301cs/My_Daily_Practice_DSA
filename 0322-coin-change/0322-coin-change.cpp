@@ -1,19 +1,18 @@
 class Solution {
 public:
     int dp[13][10001];
-    const int INF = 1e9;
 
     int solve(vector<int>& coins, int n, int sum) {
 
         if(sum == 0) return 0;
 
-        if(n == 0) return INF;
+        if(n == 0) return INT_MAX - 1;
 
         if(dp[n][sum] != -1) {
             return dp[n][sum];
         }
 
-        int take = INF;
+        int take = INT_MAX - 1;
 
         if(coins[n-1] <= sum) {
             take = 1 + solve(coins, n, sum - coins[n-1]);
@@ -30,6 +29,6 @@ public:
 
         int ans = solve(coins, coins.size(), amount);
 
-        return (ans >= 1e9) ? -1 : ans;
+        return (ans == INT_MAX - 1) ? -1 : ans;
     }
 };
