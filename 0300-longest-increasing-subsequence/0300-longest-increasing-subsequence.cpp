@@ -8,8 +8,8 @@ public:
         if (i >= n)
             return 0;
 
-        if (dp[i][p + 1] != -1) {
-            return dp[i][p + 1];
+        if (p != -1 && dp[i][p] != -1) {
+            return dp[i][p];
         }
 
         int take = 0;
@@ -21,7 +21,9 @@ public:
 
         int skip = solve(nums, i + 1, p);
 
-        return dp[i][p + 1] = max(take, skip);
+        if(p != -1)
+            dp[i][p] = max(take, skip);
+        return max(take, skip);
     }
 
     int lengthOfLIS(vector<int>& nums) {
